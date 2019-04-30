@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 dates  = []
 prices = []
 
-df = pd.read_csv('HistoricalQuotes.csv')
+df = pd.read_csv('HistoricalQuotes-1Month.csv')
 
 for index, row in df.iterrows():
     dates.append(int(row[0].replace('-','')))
@@ -16,14 +16,11 @@ for index, row in df.iterrows():
 
 dates = np.reshape(dates,(len(dates),1))
 
-# dates = df[['date', 'open']]
-# prices = df['close']
-
 # Modelling
 lin  = LinearRegression()
 svr_rbf  = SVR(kernel='rbf', C=1e3, gamma=0.1)
 
-X_train, X_test, y_train, y_test =  train_test_split(dates, prices, test_size=0.3, random_state=101)
+X_train, X_test, y_train, y_test =  train_test_split(dates, prices, test_size=0.3, random_state=42)
 
 lin.fit(X_train, y_train)
 svr_rbf.fit(X_train, y_train)
@@ -32,17 +29,17 @@ pred_brf = svr_rbf.predict(X_test)
 pred_lin = lin.predict(X_test)
 
 
-plt.scatter(y_test,[round(i,2) for i in pred_brf])
-plt.xlabel('Y Test')
-plt.ylabel('Predicted Y')
-plt.title('RBF Prediction')
-plt.show()
+# plt.scatter(y_test,[round(i,2) for i in pred_brf])
+# plt.xlabel('Y Test')
+# plt.ylabel('Predicted Y')
+# plt.title('RBF Prediction')
+# plt.show()
 
-plt.scatter(y_test,[round(i,2) for i in pred_lin])
-plt.xlabel('Y Test')
-plt.ylabel('Predicted Y')
-plt.title('Linear Prediction')
-plt.show()
+# plt.scatter(y_test,[round(i,2) for i in pred_lin])
+# plt.xlabel('Y Test')
+# plt.ylabel('Predicted Y')
+# plt.title('Linear Prediction')
+# plt.show()
 
 lin.fit(dates, prices)
 svr_rbf.fit(dates, prices)
