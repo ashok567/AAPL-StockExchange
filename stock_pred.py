@@ -57,6 +57,6 @@ plt.show()
 
 
 ans_brf = svr_rbf.predict(27)
-print(round(ans_brf[0],2))
+print("RBF Prediction: "+str(round(ans_brf[0],2)))
 ans_lin = lin.predict(27)
-print(round(ans_lin[0],2))
+print("Linear Prediction: "+str(round(ans_lin[0],2)))
