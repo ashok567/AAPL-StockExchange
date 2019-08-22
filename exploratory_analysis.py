@@ -9,14 +9,19 @@ def convert_dates(x):
     return datetime.strptime(x, "%d-%m-%Y").strftime("%Y-%m-%d")
 
 def settings():
+    plt.plot(df['date'], df['sma10'], c='blue', label='SMA over 10 period')
+    plt.plot(df['date'], df['sma50'], c='black', label='SMA over 50 period')
     plt.xlabel('Date')
     plt.ylabel('Price')
     plt.title('Apple Stock Exchange')
-    plt.xticks(rotation=40)
+    plt.legend()
     plt.tight_layout()
 
 df = pd.read_csv('HistoricalQuotes-3Months.csv')
 df['date'] = pd.to_datetime(df['date'].apply(convert_dates))
+
+df['sma10'] = df['close'].rolling(10).mean()
+df['sma50'] = df['close'].rolling(50).mean()
 
 ohlc = df[['date', 'open', 'high', 'low', 'close']].copy()
 ohlc['date'] = ohlc['date'].apply(date2num)
@@ -30,7 +35,8 @@ settings()
 plt.savefig('ohlc.png')
 plt.show()
 
-plt.plot(df['date'], df['close'])
+
+plt.plot(df['date'], df['close'], c='green', label='Closing price')
 settings()
 plt.savefig('time series.png')
 plt.show()
