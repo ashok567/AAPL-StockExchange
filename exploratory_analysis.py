@@ -1,40 +1,28 @@
 import pandas as pd
-import numpy as np 
 import matplotlib.pyplot as plt
-import seaborn as sns
+from datetime import datetime
+from mpl_finance import candlestick_ohlc
+from matplotlib.dates import date2num
+from datetime import datetime
 
 
-df = pd.read_csv('HistoricalQuotes-1Month.csv')
+def convert_dates(x):
+    return datetime.strptime(x, "%d-%m-%Y").strftime("%Y-%m-%d")
+
+df = pd.read_csv('HistoricalQuotes-3Months.csv')
+df['date'] = pd.to_datetime(df['date'].apply(convert_dates))
+
+ohlc = df[['date', 'open', 'high', 'low', 'close']].copy()
+ohlc['date'] = ohlc['date'].apply(date2num)
 
 fig, ax = plt.subplots()
+candlestick_ohlc(ax, ohlc.values, width=0.6, colorup='g', colordown='r')
 
-
-def candlestick(ax, df, width=0.2, colorup='k', colordown='r', linewidth=0.5):
-
-    date = np.array(df['date'])
-    color = []
-
-    for i in range(1,len(date)): 
-        if df['open'][i-1]<df['close'][i]:
-            color.append('k')
-        else:
-            color.append('r')
-    
-    # offset = .4
-
-    #high low Lines
-    ax.vlines(date,df['low'],df['high'],color)
-
-    #open Lines
-    ax.hlines(df['open'],date,date,color)
-    
-    #close Lines
-    ax.hlines(df['close'],date,date,color)
-
-    ax.autoscale_view()
-
-    return
-
-candlestick(ax, df)
-plt.xticks(rotation=70)
+plt.xlabel('Date')
+plt.ylabel('Price')
+plt.title('Apple Stock Exchange')
+ax.xaxis_date()
+plt.xticks(rotation=40)
+plt.tight_layout()
 plt.show()
+plt.savefig('ohlc.png')
