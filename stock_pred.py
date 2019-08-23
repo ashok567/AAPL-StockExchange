@@ -19,7 +19,7 @@ dates = np.reshape(dates,(len(dates),1))
 # Modelling
 lin  = LinearRegression()
 svr_rbf  = SVR(kernel='rbf', C=1e3, gamma=0.1)
-
+print(dates)
 X_train, X_test, y_train, y_test =  train_test_split(dates, prices, test_size=0.3, random_state=42)
 
 lin.fit(X_train, y_train)
@@ -44,9 +44,11 @@ pred_lin = lin.predict(X_test)
 lin.fit(dates, prices)
 svr_rbf.fit(dates, prices)
 
+fig, ax = plt.subplots()
 plt.scatter(dates, prices, color='black', label='Data')
 plt.plot(dates, lin.predict(dates), color='green', label='Linear Model')
 plt.plot(dates, svr_rbf.predict(dates), color='red', label='RBF Model')
+# ax.xaxis_date()
 
 
 plt.xlabel('Date')
@@ -55,8 +57,9 @@ plt.title('Apple Stock Exchange')
 plt.legend()
 plt.show()
 
-
-ans_brf = svr_rbf.predict(27)
+new_date = '27-03-2019'
+new_date_val = int(new_date.replace('-',''))
+ans_brf = svr_rbf.predict(new_date_val)
 print("RBF Prediction: "+str(round(ans_brf[0],2)))
-ans_lin = lin.predict(27)
+ans_lin = lin.predict(new_date_val)
 print("Linear Prediction: "+str(round(ans_lin[0],2)))

@@ -17,7 +17,7 @@ def settings():
     plt.legend()
     plt.tight_layout()
 
-df = pd.read_csv('HistoricalQuotes-3Months.csv')
+df = pd.read_csv('HistoricalQuotes.csv')
 df['date'] = pd.to_datetime(df['date'].apply(convert_dates))
 
 df['sma10'] = df['close'].rolling(10).mean()
@@ -28,7 +28,7 @@ ohlc['date'] = ohlc['date'].apply(date2num)
 
 fig, ax = plt.subplots()
 
-candlestick_ohlc(ax, ohlc.values, width=0.6, colorup='g', colordown='r')
+candlestick_ohlc(ax, ohlc.values, width=0.9, colorup='g', colordown='r')
 
 ax.xaxis_date()
 settings()
