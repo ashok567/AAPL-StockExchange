@@ -1,0 +1,6 @@
+pandas
+matplotlib
+scikit-learn
+numpy
+https://github.com/matplotlib/mpl_finance/archive/master.zip
+

@@ -1,6 +1,5 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from datetime import datetime
 from mpl_finance import candlestick_ohlc
 from matplotlib.dates import date2num
 from datetime import datetime

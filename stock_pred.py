@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np 
 import matplotlib.pyplot as plt
-from scipy import stats
 from datetime import datetime
 from matplotlib.dates import date2num
 from sklearn.svm import SVR
